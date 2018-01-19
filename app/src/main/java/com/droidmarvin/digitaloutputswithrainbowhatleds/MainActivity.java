@@ -2,6 +2,7 @@ package com.droidmarvin.digitaloutputswithrainbowhatleds;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.PeripheralManagerService;
@@ -28,5 +29,18 @@ public class MainActivity extends Activity {
 
             throw new IllegalStateException(BLUE_LED_PIN + "gpio bus could not open.",e);
         }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        try {
+            mGpio.close();
+        }catch (IOException e){
+            Log.e("TUT", BLUE_LED_PIN + " gpio bus could not close", e);
+        }
+
+        super.onDestroy();
     }
 }
