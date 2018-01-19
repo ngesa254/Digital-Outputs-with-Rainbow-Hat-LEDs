@@ -21,13 +21,20 @@ public class MainActivity extends Activity {
 
         PeripheralManagerService service = new PeripheralManagerService();
 
+        //open gpio bus
         try {
-
             mGpio = service.openGpio(BLUE_LED_PIN);
-
         } catch (IOException e){
-
             throw new IllegalStateException(BLUE_LED_PIN + "gpio bus could not open.",e);
+        }
+
+        //set direction and active type
+        try {
+            mGpio.setDirection(Gpio.DIRECTION_OUT_INITIALLY_HIGH);
+            mGpio.setActiveType(Gpio.ACTIVE_HIGH);
+        }catch (IOException e){
+            throw new IllegalStateException(BLUE_LED_PIN + "gpio bus could not get configured",e);
+
         }
 
     }
